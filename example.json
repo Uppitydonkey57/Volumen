@@ -1,0 +1,13 @@
+{
+  "name": "Lorem Ipsum",
+
+  "text": "[sub]Lorem[/sub] ipsum [gen]dolor[/gen] sit amet, [do]consectetur[/do] adipiscing elit. Curabitur [footnote 0]vitae pulvinar nunc[/footnote]. Aenean nunc eros, maximus sed condimentum at, pharetra ac augue. Etiam dictum non felis non gravida. Donec mollis, tortor id eleifend hendrerit, velit purus pulvinar tellus, eu sagittis lacus ante sed nulla. Nullam viverra sagittis neque, a rutrum dolor mattis a. Curabitur ac gravida libero. Nam viverra ac leo ut sollicitudin.",
+
+  "footnotes": [
+    {
+      "id": "0",
+      "word": "vitae",
+      "description": "life, career, livelihood; mode of life;"
+    }
+  ]
+}

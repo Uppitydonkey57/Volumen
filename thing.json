@@ -1,0 +1,1 @@
+{"name":"Hello ","text":"   if(saveFileDialog.ShowDialog() == true)\r\n    File.WriteAllText(saveFileDialog.FileName, txtEditor.Text);","footnotes":null}
