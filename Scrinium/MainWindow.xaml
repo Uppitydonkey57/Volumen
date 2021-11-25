@@ -5,38 +5,169 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Scrinium"
         mc:Ignorable="d"
-        Title="Scrinium" Height="450" Width="800">
+        Title="Scrinium" Height="450" Width="800" Background="#FFFCFCFC">
     <Grid Margin="0,0,0.2,-0.2">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="199*"/>
-            <ColumnDefinition Width="517*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
             <RowDefinition Height= "350*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Column="0" Grid.Row ="1" HorizontalAlignment="Center" Content="Footnotes" FontSize="15" Margin="72,0,72.2,0" Width="77"/>
-        <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Content="Text" FontSize="15" Margin="228.8,0,308.2,0" Width="37"/>
-        <Label></Label>
-        <Button Grid.Column="0" Grid.Row="0" Click="SelectFile" Content="Load Text" Margin="10,3.2,3.2,5.8"/>
+        <TabControl Grid.Row="1" Margin="10,10,10,10">
+            <TabItem Header="Text">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row ="0" HorizontalAlignment="Center" Content="Text" FontSize="15" Margin="72,0,72.2,0" Width="77"/>
+                    <Border Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
+                        <TextBlock Name="Text" Margin="8,8,8,8" TextWrapping="Wrap" Foreground="Black" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Vocab">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" HorizontalAlignment="Center" Content="Vocab" FontSize="15" Margin="158,0,162,0" Width="52"/>
+                    <Border Grid.Column="0" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10.2">
+                        <TextBlock Name="VocabText" Margin="8,8,8,8" TextWrapping="Wrap" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Latin Notes">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row ="0" HorizontalAlignment="Center" Content="Latin Notes" FontSize="15" Margin="147,0,140,0" Width="85"/>
+                    <Border Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
+                        <TextBlock Name="LatinNotesText" Margin="8,8,8,8" TextWrapping="Wrap" Foreground="Black" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="General Notes">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row ="0" HorizontalAlignment="Center" Content="General Notes" FontSize="15" Margin="136,0,127,0" Width="109"/>
+                    <Border Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
+                        <TextBlock Name="GeneralNotesText" Margin="8,8,8,8" TextWrapping="Wrap" Foreground="Black" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Translation">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row ="0" HorizontalAlignment="Center" Content="Translation" FontSize="15" Margin="136,0,127,0" Width="109"/>
+                    <Border Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
+                        <TextBlock Name="TraslationText" Margin="8,8,8,8" TextWrapping="Wrap" Foreground="Black" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <TabControl Grid.Row="1" Margin="10,10,10,10" Grid.Column="1">
+            <TabItem Header="Text">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row ="0" HorizontalAlignment="Center" Content="Text" FontSize="15" Margin="72,0,72.2,0" Width="77"/>
+                    <Border Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
+                        <TextBlock Name="Text2" Margin="8,8,8,8" TextWrapping="Wrap" Foreground="Black" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Vocab">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" HorizontalAlignment="Center" Content="Vocab" FontSize="15" Margin="158,0,162,0" Width="52"/>
+                    <Border Grid.Column="0" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10,10.2">
+                        <TextBlock Name="VocabText2" Margin="8,8,8,8" TextWrapping="Wrap" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Latin Notes">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row ="0" HorizontalAlignment="Center" Content="Latin Notes" FontSize="15" Margin="147,0,140,0" Width="85"/>
+                    <Border Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
+                        <TextBlock Name="LatinNotesText2" Margin="8,8,8,8" TextWrapping="Wrap" Foreground="Black" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="General Notes">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row ="0" HorizontalAlignment="Center" Content="General Notes" FontSize="15" Margin="136,0,127,0" Width="109"/>
+                    <Border Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
+                        <TextBlock Name="GeneralNotesText2" Margin="8,8,8,8" TextWrapping="Wrap" Foreground="Black" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Translation">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row ="0" HorizontalAlignment="Center" Content="Translation" FontSize="15" Margin="136,0,127,0" Width="109"/>
+                    <Border Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
+                        <TextBlock Name="TraslationText2" Margin="8,8,8,8" TextWrapping="Wrap" Foreground="Black" FontSize="14"/>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
         <ComboBox Grid.Column="1" HorizontalAlignment="Left" Height="31" Margin="5.8,3.2,0,2" Grid.Row="0" VerticalAlignment="Top" Width="176">
             <ComboBoxItem IsSelected="True">Easy</ComboBoxItem>
             <ComboBoxItem>Medium</ComboBoxItem>
             <ComboBoxItem>Hard</ComboBoxItem>
         </ComboBox>
 
-
-
-        <Border Grid.Column="0" Grid.Row="2" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="10,10,10.2,9.8">
-            <TextBlock Name="Footnotes" HorizontalAlignment="Left" Margin="8,8,8,8" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Height="303" FontSize="14"/>
-        </Border>
-
-        <Border Grid.Column="1" Grid.Row="2" BorderThickness="2" BorderBrush="Black" RenderTransformOrigin="0.5,0.5" Margin="9.8,10,10.2,9.8">
-            <TextBlock Name="Text" HorizontalAlignment="Left" Height="303" Margin="8,8,8,8" TextWrapping="Wrap" VerticalAlignment="Top" Width="534" Foreground="Black" FontSize="14"/>
-        </Border>
+        <Button Grid.Column="0" Grid.Row="0" Click="SelectFile" Content="Load Text" Margin="10,3.2,3.2,5.8"/>
 
     </Grid>
 </Window>

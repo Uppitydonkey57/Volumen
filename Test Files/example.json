@@ -1,0 +1,31 @@
+{
+  "name": "Lorem Ipsum",
+  "text": "[sub]Lorem[/sub] ipsum [gen]dolor[/gen] sit amet, [do]consectetur[/do] adipiscing elit. Curabitur [footnote 0]vitae pulvinar nunc[/footnote]. Aenean nunc eros, [sub]maximus[/sub] sed condimentum at, pharetra ac augue. Etiam dictum non felis non gravida. Donec mollis, tortor id eleifend hendrerit, velit purus pulvinar tellus, eu sagittis lacus ante sed nulla. Nullam viverra sagittis neque, a rutrum dolor mattis a. Curabitur ac gravida libero. Nam viverra ac leo ut sollicitudin.",
+
+  "translation": "",
+  "translation visible": false,
+
+  "vocabnotes": [
+    {
+      "id": "0",
+      "word": "virtue",
+      "description": "To have virtue (I think this is wrong)"
+    }
+  ],
+
+  "latinnotes": [
+    {
+      "id": "0",
+      "title": "what is it?",
+      "description": "It's a really popular thing to test text with"
+    }
+  ],
+
+  "generalnotes": [
+    {
+      "id": "0",
+      "title": "what is it? (same note!)",
+      "description": "It's a really popular thing to test text with"
+    }
+  ]
+}

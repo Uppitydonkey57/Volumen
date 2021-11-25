@@ -33,6 +33,18 @@ namespace Scrinium
 
         public void SelectFile(object sender, RoutedEventArgs e)
         {
+            Text.Text = "";
+            GeneralNotesText.Text = "";
+            VocabText.Text = "";
+            LatinNotesText.Text = "";
+            TraslationText.Text = "";
+
+            Text2.Text = "";
+            GeneralNotesText2.Text = "";
+            VocabText2.Text = "";
+            LatinNotesText2.Text = "";
+            TraslationText2.Text = "";
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON Files (*.json)|*.json|All files (*.*)|*.*";
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -51,16 +63,66 @@ namespace Scrinium
             using (StreamReader sr = new StreamReader(fileName))
             {
                 LatinText latinText = JsonConvert.DeserializeObject<LatinText>(sr.ReadToEnd());
-                Text.Text = latinText.text;
 
-                if (latinText.footnotes != null)
+                ParseText(latinText, Text);
+                ParseText(latinText, Text2);
+
+                if (latinText.translationVisible)
                 {
-                    foreach (FootNote footnote in latinText.footnotes)
+                    TraslationText2.Text = latinText.translation;
+                    TraslationText.Text = latinText.translation;
+                }
+                else
+                {
+                    TraslationText2.Text = "There is no translation available.";
+                    TraslationText.Text = "There is no translation available.";
+                }
+
+                if (latinText.latinNotes != null)
+                {
+                    foreach (LatinNote latinNote in latinText.latinNotes)
                     {
-                        Footnotes.Text += footnote.id + "\n";
-                        Footnotes.Text += footnote.word + "\n";
-                        Footnotes.Text += footnote.description + "\n";
-                        Footnotes.Text += "\n";
+                        LatinNotesText.Text += latinNote.id +           "\n";
+                        LatinNotesText.Text += latinNote.title +        "\n";
+                        LatinNotesText.Text += latinNote.description +  "\n";
+                        LatinNotesText.Text +=                          "\n";
+
+                        LatinNotesText2.Text += latinNote.id + "\n";
+                        LatinNotesText2.Text += latinNote.title + "\n";
+                        LatinNotesText2.Text += latinNote.description + "\n";
+                        LatinNotesText2.Text += "\n";
+                    }
+                }
+
+                if (latinText.generalNotes != null)
+                {
+                    foreach (GeneralNote latinNote in latinText.generalNotes)
+                    {
+                        GeneralNotesText.Text += latinNote.id +          "\n";
+                        GeneralNotesText.Text += latinNote.title +       "\n";
+                        GeneralNotesText.Text += latinNote.description + "\n";
+                        GeneralNotesText.Text +=                         "\n";
+
+                        GeneralNotesText2.Text += latinNote.id + "\n";
+                        GeneralNotesText2.Text += latinNote.title + "\n";
+                        GeneralNotesText2.Text += latinNote.description + "\n";
+                        GeneralNotesText2.Text += "\n";
+                    }
+                }
+
+                if (latinText.generalNotes != null)
+                {
+                    foreach (VocabNote latinNote in latinText.vocabNotes)
+                    {
+                        VocabText.Text += latinNote.id +          "\n";
+                        VocabText.Text += latinNote.word +        "\n";
+                        VocabText.Text += latinNote.description + "\n";
+                        VocabText.Text +=                         "\n";
+
+                        VocabText2.Text += latinNote.id + "\n";
+                        VocabText2.Text += latinNote.word + "\n";
+                        VocabText2.Text += latinNote.description + "\n";
+                        VocabText2.Text += "\n";
                     }
                 }
             }
@@ -71,14 +133,98 @@ namespace Scrinium
             public string name;
             public string text;
 
-            public FootNote[] footnotes;
+            public string translation;
+            public bool translationVisible;
+
+            public LatinNote[] latinNotes;
+            public GeneralNote[] generalNotes;
+            public VocabNote[] vocabNotes;
         }
 
-        public class FootNote
+        public class LatinNote
+        {
+            public string id;
+            public string title;
+            public string description;
+        }
+
+        public class GeneralNote
+        {
+            public string id;
+            public string title;
+            public string description;
+        }
+
+        public class VocabNote
         {
             public string id;
             public string word;
             public string description;
+        }
+
+        public void ParseText(LatinText latinText, TextBlock textObject)
+        {
+            string[] splitText = latinText.text.Split('[', ']');
+
+            bool isInBrackets = false;
+
+            bool isBold = false;
+            bool isItalic = false;
+
+            string effectedSegment = "";
+
+            foreach (string text in splitText)
+            {
+                Console.WriteLine(text + " line!");
+                if (!isInBrackets)
+                {
+                    Console.WriteLine(text + "  out of bracket!");
+
+                    if (isBold || isItalic)
+                    {
+                        effectedSegment += text;
+                    }
+                    else
+                    {
+                        textObject.Inlines.Add(new Run(text));
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(text + " in bracket!");
+
+                    switch (text)
+                    {
+                        case "sub":
+                            isBold = true;
+                            break;
+
+                        case "do":
+                            isItalic = true;
+                            break;
+
+                        case "/sub":
+                            isBold = false;
+                            textObject.Inlines.Add(new Bold(new Run(effectedSegment)));
+                            Console.WriteLine(effectedSegment + " in bold");
+                            effectedSegment = "";
+                            break;
+
+                        case "/do":
+                            isItalic = false;
+                            textObject.Inlines.Add(new Italic(new Run(effectedSegment)));
+                            Console.WriteLine(effectedSegment + " in italic");
+                            effectedSegment = "";
+                            break;
+
+                        default:
+                            //Text.Text += "[" + text + "]";
+                            break;
+                    }
+                }
+
+                isInBrackets = !isInBrackets;
+            }
         }
     }
 }
