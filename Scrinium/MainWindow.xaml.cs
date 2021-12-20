@@ -110,7 +110,7 @@ namespace Scrinium
                     }
                 }
 
-                if (latinText.generalNotes != null)
+                if (latinText.vocabNotes != null)
                 {
                     foreach (VocabNote latinNote in latinText.vocabNotes)
                     {
@@ -123,6 +123,8 @@ namespace Scrinium
                         VocabText2.Text += latinNote.word + "\n";
                         VocabText2.Text += latinNote.description + "\n";
                         VocabText2.Text += "\n";
+
+                        Console.WriteLine(latinNote.id + " " + latinNote.word + " " + latinNote.description + " ");
                     }
                 }
             }

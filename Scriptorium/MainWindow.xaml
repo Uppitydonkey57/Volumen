@@ -9,33 +9,76 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"/>
-            <!--<RowDefinition Height="30"/>-->
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="12*"/>
+            <RowDefinition Height="410*"/>
         </Grid.RowDefinitions>
 
-        <!--<TabControl Grid.Row="1">
-            <TabItem Header="Text" Width="60" Height="30">
-                <Canvas Margin="0,0,-0.4,-359">
-                    <Label Content="Hi" Panel.ZIndex="100"/>
-                    <Label Grid.Row="2" Content="Title"/>
-                    <TextBox Name="Title"  Grid.Row="1" Margin="5,25,10,0" Height="18" VerticalAlignment="Top"/>
+        <TabControl Grid.Row="1" Margin="5,5,5,5">
+            <TabItem Header="Text">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height= "350*"/>
+                    </Grid.RowDefinitions>
 
-                    <Label Grid.Row="3" Content="Text"/>
-                    <TextBox Name="Text" Grid.Row="2" Margin="5,25,10,10" AcceptsReturn="True" TextWrapping="Wrap"/>
-                </Canvas>
+                    <Label Grid.Row="0" Content="Title"/>
+                    <TextBox Name="Title"  Grid.Row="0" Margin="5,25,10,0" Height="18" VerticalAlignment="Top"/>
+
+                    <Label Grid.Row="1" Content="Text"/>
+                    <TextBox Name="Text" Grid.Row="1" Margin="5,25,10,10" AcceptsReturn="True" TextWrapping="Wrap"/>
+                </Grid>
             </TabItem>
 
-            <TabItem Header="FootNotes">
-                
+            <TabItem Header="Translation">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="350*"/>
+                        <RowDefinition Height= "60"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Content="Text"/>
+                    <TextBox Name="TranslationBox" Grid.Row="0" Margin="5,25,10,10" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+                    <Label Grid.Row="1" Content="Translation Visible"/>
+                    <CheckBox Grid.Row="1" IsChecked="True" Name="TranslationVisibleBox" Margin="5,25,10,0" Height="18" VerticalAlignment="Top"/>
+
+                </Grid>
             </TabItem>
-        </TabControl>-->
 
-        <Label Grid.Row="1" Content="Title"/>
-        <TextBox Name="Title"  Grid.Row="1" Margin="5,25,10,0" Height="18" VerticalAlignment="Top"/>
+            <TabItem Header="Vocab">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="340*"/>
+                    </Grid.RowDefinitions>
 
-        <Label Grid.Row="2" Content="Text"/>
-        <TextBox Name="Text" Grid.Row="2" Margin="5,25,10,10" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="246*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="+" Width="20" Height="20" Name="AddVocab" Click="AddToVocab" Margin="26,10,154.4,0.4"/>
+
+                    <ListBox Grid.Row="1" Name="VocabList" Margin="10,10.6,10.4,10" SelectionChanged="WordChanged"/>
+
+                    <Grid Grid.Column="1" Margin="10.6,0,10,10.2" VerticalAlignment="Stretch" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="270*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Label Content="Word"/>
+
+                        <TextBox Name="VocabTitle" Grid.Row="0" Margin="10,30,10,10" TextChanged="TitleChanged"/>
+
+                        <Label Grid.Row="1" Content="Description"/>
+
+                        <TextBox Grid.Row="1" Name="VocabDefinition" Margin="10,30,9.8,10" TextChanged="DescriptionChanged" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    </Grid>
+                    <Button Content="-" Width="20" Height="20" x:Name="AddVocab_Copy" Click="DeleteVocabItem" Margin="122,10,58.4,0.4"/>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
 
         <Menu Grid.Row="0" Height="18" VerticalAlignment="Top">
             <MenuItem Height="18" Width="51" Header="File">
