@@ -13,18 +13,18 @@
     }
   ],
 
-  "latinnotes": [
-    {
-      "id": "0",
-      "title": "what is it?",
-      "description": "It's a really popular thing to test text with"
-    }
-  ],
-
   "generalnotes": [
     {
       "id": "0",
       "title": "what is it? (same note!)",
+      "description": "It's a really popular thing to test text with"
+    }
+  ],
+
+  "latinnotes": [
+    {
+      "id": "0",
+      "title": "what is it?",
       "description": "It's a really popular thing to test text with"
     }
   ]

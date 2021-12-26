@@ -20,7 +20,11 @@ namespace Scrinium
     {
         public ListBox menu;
 
-        public Button addButton;
-        public Button removeButton;
+        public int currentPart;
+        
+        public void SelectionChanged(int selectedIndex)
+        {
+
+        }
     }
 }

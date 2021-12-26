@@ -24,6 +24,8 @@ namespace Scriptorium
     public partial class MainWindow : Window
     {
         List<VocabNote> vocabNotes = new List<VocabNote>();
+        List<GeneralNote> generalNotes = new List<GeneralNote>();
+        List<LatinNote> latinNotes = new List<LatinNote>();
 
         public MainWindow()
         {
@@ -42,17 +44,35 @@ namespace Scriptorium
             VocabTitle.Text = "";
             VocabDefinition.Text = "";
             VocabList.Items.Clear();
+
+            generalNotes = new List<GeneralNote>();
+            GeneralNoteTitle.Text = "";
+            GeneralNoteText.Text = "";
+            GeneralNoteList.Items.Clear();
+
+            latinNotes = new List<LatinNote>();
+            LatinNoteTitle.Text = "";
+            LatinNoteText.Text = "";
+            LatinNoteList.Items.Clear();
+
         }
 
         public void OpenFile(object sender, RoutedEventArgs e)
         {
             currentWord = -1;
+            currentGeneralNote = -1;
+            currentLatinNote = -1;
 
             NewFile(null, null);
             LatinText openText = JsonToLatin();
 
             if (openText != null)
             {
+                Text.Text = openText.text;
+                Title.Text = openText.name;
+                TranslationBox.Text = openText.translation;
+                TranslationVisibleBox.IsChecked = openText.translationVisible;
+
                 Text.Text = openText.text;
                 Title.Text = openText.name;
                 TranslationBox.Text = openText.translation;
@@ -70,6 +90,32 @@ namespace Scriptorium
                 }
                 VocabList.SelectedItem = 0;
                 currentWord = 0;
+
+                if (openText.generalNotes != null)
+                {
+                    generalNotes = openText.generalNotes.ToList();
+                    GeneralNoteTitle.Text = generalNotes[0].title;
+                    GeneralNoteText.Text = generalNotes[0].description;
+                    foreach (GeneralNote note in generalNotes)
+                    {
+                        GeneralNoteList.Items.Add(new ListBoxItem() { Content = note.title });
+                    }
+                }
+                GeneralNoteList.SelectedItem = 0;
+                currentGeneralNote = 0;
+
+                if (openText.latinNotes != null)
+                {
+                    latinNotes = openText.latinNotes.ToList();
+                    LatinNoteTitle.Text = latinNotes[0].title;
+                    LatinNoteText.Text = latinNotes[0].description;
+                    foreach (LatinNote note in latinNotes)
+                    {
+                        LatinNoteList.Items.Add(new ListBoxItem() { Content = note.title });
+                    }
+                }
+                LatinNoteList.SelectedItem = 0;
+                currentLatinNote = 0;
             }
         }
 
@@ -84,6 +130,8 @@ namespace Scriptorium
             latinText.translationVisible = (bool)TranslationVisibleBox.IsChecked;
             latinText.translation = TranslationBox.Text;
             latinText.vocabNotes = vocabNotes.ToArray();
+            latinText.generalNotes = generalNotes.ToArray();
+            latinText.latinNotes = latinNotes.ToArray();
 
             if (saveFileDialog.ShowDialog() == true)
                 File.WriteAllText(saveFileDialog.FileName, JsonConvert.SerializeObject(latinText));
@@ -95,7 +143,8 @@ namespace Scriptorium
         }
 
         #endregion
-
+        
+        //I know just reusing the same code 3 times probably isn't very efficient I just don't know a better way to do it.
         #region Vocab
         public void AddToVocab(object sender, RoutedEventArgs e)
         {
@@ -167,7 +216,149 @@ namespace Scriptorium
 
         #endregion
 
-        #region File Saving & Formats
+        #region General Notes
+        public void AddToGeneralNote(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem item = new ListBoxItem();
+            item.Content = GeneralNoteTitle.Text;
+
+            GeneralNote note = new GeneralNote();
+            note.id = (GeneralNoteList.Items.Count - 1).ToString();
+            note.title = GeneralNoteTitle.Text;
+            note.description = GeneralNoteText.Text;
+
+            if ((GeneralNoteList.Items.Count == 0 || (currentGeneralNote > 0 && vocabNotes[currentGeneralNote].word == "")) && string.IsNullOrEmpty(GeneralNoteTitle.Text))
+            {
+                note.title = "New Note";
+                GeneralNoteTitle.Text = "New Note";
+                item.Content = "New Note";
+            }
+
+            GeneralNoteList.Items.Add(item);
+            generalNotes.Add(note);
+
+            currentGeneralNote = GeneralNoteList.Items.Count - 1;
+        }
+
+        public void TitleChangedGeneral(object sender, TextChangedEventArgs e)
+        {
+            if (currentGeneralNote >= 0 && GeneralNoteList.Items.Count > 0)
+            {
+                //change vocablist when reusing function
+                generalNotes[currentGeneralNote].title = GeneralNoteTitle.Text;
+                ListBoxItem vocabItem = new ListBoxItem() { Content = generalNotes[currentGeneralNote].title };
+                GeneralNoteList.Items[currentGeneralNote] = vocabItem;
+            }
+        }
+
+        public void DescriptionChangedGeneral(object sender, TextChangedEventArgs e)
+        {
+            if (currentGeneralNote >= 0 && GeneralNoteList.Items.Count > 0)
+            {
+                generalNotes[currentGeneralNote].description = GeneralNoteText.Text;
+            }
+        }
+
+        public void DeleteGeneralNote(object sender, RoutedEventArgs e)
+        {
+            if (GeneralNoteList.SelectedIndex >= 0)
+            {
+                generalNotes.RemoveAt(GeneralNoteList.SelectedIndex);
+                GeneralNoteList.Items.Remove(GeneralNoteList.SelectedItem);
+            }
+
+        }
+
+        int currentGeneralNote = 0;
+
+        private void GeneralNoteChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (GeneralNoteList.SelectedIndex >= 0 && GeneralNoteList.Items.Count > 0)
+            {
+                currentGeneralNote = GeneralNoteList.SelectedIndex;
+                Console.WriteLine(currentGeneralNote + " " + VocabList.SelectedIndex + " " + VocabList.Items.Count);
+
+                GeneralNote note = generalNotes[currentGeneralNote];
+
+                GeneralNoteText.Text = note.description;
+                GeneralNoteTitle.Text = note.title;
+            }
+        }
+
+        #endregion
+
+        #region Latin Notes
+        public void AddToLatinNotes(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem item = new ListBoxItem();
+            item.Content = LatinNoteTitle.Text;
+
+            LatinNote note = new LatinNote();
+            note.id = (LatinNoteList.Items.Count - 1).ToString();
+            note.title = LatinNoteTitle.Text;
+            note.description = LatinNoteText.Text;
+
+            if ((LatinNoteList.Items.Count == 0 || (currentLatinNote > 0 && vocabNotes[currentLatinNote].word == "")) && string.IsNullOrEmpty(LatinNoteTitle.Text))
+            {
+                note.title = "New Note";
+                LatinNoteTitle.Text = "New Note";
+                item.Content = "New Note";
+            }
+
+            LatinNoteList.Items.Add(item);
+            latinNotes.Add(note);
+
+            currentLatinNote = LatinNoteList.Items.Count - 1;
+        }
+
+        public void TitleChangedLatin(object sender, TextChangedEventArgs e)
+        {
+            if (currentLatinNote >= 0 && LatinNoteList.Items.Count > 0)
+            {
+                //change vocablist when reusing function
+                latinNotes[currentLatinNote].title = LatinNoteTitle.Text;
+                ListBoxItem vocabItem = new ListBoxItem() { Content = latinNotes[currentLatinNote].title };
+                LatinNoteList.Items[currentLatinNote] = vocabItem;
+            }
+        }
+
+        public void DescriptionChangedLatin(object sender, TextChangedEventArgs e)
+        {
+            if (currentLatinNote >= 0 && LatinNoteList.Items.Count > 0)
+            {
+                latinNotes[currentLatinNote].description = LatinNoteText.Text;
+            }
+        }
+
+        public void DeleteLatinNote(object sender, RoutedEventArgs e)
+        {
+            if (LatinNoteList.SelectedIndex >= 0)
+            {
+                latinNotes.RemoveAt(LatinNoteList.SelectedIndex);
+                LatinNoteList.Items.Remove(LatinNoteList.SelectedItem);
+            }
+
+        }
+
+        int currentLatinNote = 0;
+
+        private void LatinNoteChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LatinNoteList.SelectedIndex >= 0 && LatinNoteList.Items.Count > 0)
+            {
+                currentLatinNote = LatinNoteList.SelectedIndex;
+                Console.WriteLine(currentLatinNote + " " + VocabList.SelectedIndex + " " + VocabList.Items.Count);
+
+                LatinNote note = latinNotes[currentLatinNote];
+
+                LatinNoteText.Text = note.description;
+                LatinNoteTitle.Text = note.title;
+            }
+        }
+
+        #endregion
+
+        #region Json & Object Formats
 
         public LatinText JsonToLatin()
         {

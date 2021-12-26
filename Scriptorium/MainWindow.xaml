@@ -78,6 +78,76 @@
 
                 </Grid>
             </TabItem>
+            
+            <TabItem Header="General Notes">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="340*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="246*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="+" Width="20" Height="20" Name="AddGeneralNote" Click="AddToGeneralNote" Margin="26,10,154.4,0.4"/>
+
+                    <ListBox Grid.Row="1" Name="GeneralNoteList" Margin="10,10.6,10.4,10" SelectionChanged="GeneralNoteChanged"/>
+
+                    <Grid Grid.Column="1" Margin="10.6,0,10,10.2" VerticalAlignment="Stretch" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="270*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Title"/>
+
+                        <TextBox Name="GeneralNoteTitle" Grid.Row="0" Margin="10,30,10,10" TextChanged="TitleChangedGeneral"/>
+
+                        <Label Grid.Row="1" Content="Note"/>
+
+                        <TextBox Grid.Row="1" Name="GeneralNoteText" Margin="10,30,9.8,10" TextChanged="DescriptionChangedGeneral" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    </Grid>
+                    <Button Content="-" Width="20" Height="20" x:Name="RemoveGeneralNote" Click="DeleteGeneralNote" Margin="122,10,58.4,0.4"/>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Latin Notes">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="340*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="246*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="+" Width="20" Height="20" Name="AddLatinNote" Click="AddToLatinNotes" Margin="26,10,154.4,0.4"/>
+
+                    <ListBox Grid.Row="1" Name="LatinNoteList" Margin="10,10.6,10.4,10" SelectionChanged="LatinNoteChanged"/>
+
+                    <Grid Grid.Column="1" Margin="10.6,0,10,10.2" VerticalAlignment="Stretch" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="270*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Title"/>
+
+                        <TextBox Name="LatinNoteTitle" Grid.Row="0" Margin="10,30,10,10" TextChanged="TitleChangedLatin"/>
+
+                        <Label Grid.Row="1" Content="Note"/>
+
+                        <TextBox Grid.Row="1" Name="LatinNoteText" Margin="10,30,9.8,10" TextChanged="DescriptionChangedLatin" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    </Grid>
+                    <Button Content="-" Width="20" Height="20" x:Name="RemoveLatinNote" Click="DeleteLatinNote" Margin="122,10,58.4,0.4"/>
+
+                </Grid>
+            </TabItem>
         </TabControl>
 
         <Menu Grid.Row="0" Height="18" VerticalAlignment="Top">
