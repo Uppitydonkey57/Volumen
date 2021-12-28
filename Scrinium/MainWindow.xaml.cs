@@ -29,6 +29,9 @@ namespace Scrinium
         public MainWindow()
         {
             InitializeComponent();
+
+            Translate translator = new Translate();
+            Console.WriteLine(translator.GetTranslation("Salve"));
         }
 
         public void SelectFile(object sender, RoutedEventArgs e)

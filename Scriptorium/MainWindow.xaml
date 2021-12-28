@@ -150,14 +150,17 @@
             </TabItem>
         </TabControl>
 
-        <Menu Grid.Row="0" Height="18" VerticalAlignment="Top">
-            <MenuItem Height="18" Width="51" Header="File">
-                <MenuItem Header="New"     Click="NewFile"/>
-                <MenuItem Header="Open"    Click="OpenFile"/>
-                <MenuItem Header="Save"    Click="SaveFile"/>
-                <MenuItem Header="Save As" Click="SaveFileAs"/>
+        <Menu Grid.Row="0" Height="18" VerticalAlignment="Top" Name="Menu">
+            <MenuItem Height="18" Width="51" Header="File" Name="FileMenu">
+                <MenuItem Header="New"     Click="NewFile" Name="New"/>
+                <MenuItem Header="Open"    Click="OpenFile" Name="Open"/>
+                <MenuItem Header="Save"    Click="SaveFile" Name="Save"/>
+                <MenuItem Header="Save As" Click="SaveFileAs" Name="SaveAs"/>
+                <MenuItem Header="Export" Name="Export">
+                    <MenuItem Header="As PDF" Click="ExportPDF" Name="AsPDF"/>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Height="16" Width="51" Header="Edit">
+            <MenuItem Height="16" Width="51" Header="Edit" Name="Edit">
             </MenuItem>
         </Menu>
 

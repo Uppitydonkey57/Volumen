@@ -15,6 +15,11 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using System.IO;
 using Microsoft.Win32;
+using PdfSharp;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+using PdfSharp.Fonts;
+using Scriptorium.Plugins;
 
 namespace Scriptorium
 {
@@ -27,9 +32,31 @@ namespace Scriptorium
         List<GeneralNote> generalNotes = new List<GeneralNote>();
         List<LatinNote> latinNotes = new List<LatinNote>();
 
+        List<Plugin> plugins = new List<Plugin>();
+
+        public Menu menu { get { return Menu; } set { Menu = value; } }
+
         public MainWindow()
         {
             InitializeComponent();
+
+            string[] files = Directory.GetFiles(@"Plugins/","*.lua");
+
+            foreach (string file in files)
+            {
+                LuaPlugin plugin = new LuaPlugin(file, false);
+                plugins.Add(plugin);
+            }
+
+            foreach (Plugin plugin in plugins)
+            {
+                plugin.window = this;
+
+                if (plugin.shouldRun)
+                {
+                    plugin.OnRun();
+                }
+            }
         }
 
         #region File Loading
@@ -140,6 +167,21 @@ namespace Scriptorium
         public void SaveFileAs(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public void ExportPDF(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PDF file (*.pdf)|*.pdf";
+
+            PdfDocument pdf = new PdfDocument();
+            pdf.Info.Title = Title.Text;
+            PdfPage titlePage = pdf.AddPage();
+            XGraphics titleGraphics = XGraphics.FromPdfPage(titlePage);
+            //XFont font = new XFont("", 20);
+
+            if (saveFileDialog.ShowDialog() == true)
+                pdf.Save(saveFileDialog.FileName);
         }
 
         #endregion
@@ -379,6 +421,19 @@ namespace Scriptorium
             }
 
             return null;
+        }
+
+        public LatinText GetCurrentVersion()
+        {
+            LatinText latinText = new LatinText();
+            latinText.name = Title.Text;
+            latinText.text = Text.Text;
+            latinText.translationVisible = (bool)TranslationVisibleBox.IsChecked;
+            latinText.translation = TranslationBox.Text;
+            latinText.vocabNotes = vocabNotes.ToArray();
+            latinText.generalNotes = generalNotes.ToArray();
+            latinText.latinNotes = latinNotes.ToArray();
+            return latinText;
         }
 
         public class LatinText
